@@ -34,3 +34,14 @@ if uploaded_file:
             st.success(f"Predicted Digit : {prediction}")
         else:
             st.error("Prediction Failed")
+
+images_folder = "static"
+images = [f for f in os.listdir(images_folder) if f.endswith(".png")]
+
+cols = st.columns(5) # 5 images in each column that user can see
+for idx, img_file in enumerate(images):
+    image_path = os.path.join(images_folder, img_file )
+    with cols[idx % 5]:
+        st.image(image_path, caption=img_file, use_column_width=True)
+        with open(image_path, "rb") as f:
+            st.download_button(label="Download", data=f, file_name=img_file, mime="image/png")
